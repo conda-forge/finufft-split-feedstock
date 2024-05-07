@@ -14,7 +14,7 @@ source:
     - 0003-cufinufft-python-extension.patch
 
 build:
-  number: 0
+  number: 1
 
 outputs:
   - name: libfinufft
@@ -30,6 +30,7 @@ outputs:
     requirements:
       build:
         - {{ compiler('cxx') }}
+        - {{ stdlib("c") }}
         - cmake
         - ninja
         - python  # [win]
@@ -86,6 +87,7 @@ outputs:
     requirements:
       build:
         - {{ compiler('cxx') }}
+        - {{ stdlib("c") }}
         - {{ compiler('cuda') }}
         - cmake
         - ninja
