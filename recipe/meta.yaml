@@ -75,9 +75,8 @@ outputs:
   - name: libcufinufft
     version: {{ version }}
     script: build_finufft.sh   # [unix]
-    script: build_finufft.bat  # [win]
     build:
-      skip: True  # [cuda_compiler_version == "None"]
+      skip: True  # [win or cuda_compiler_version == "None"]
       run_exports:
         - {{ pin_subpackage('libcufinufft', max_pin='x.x') }}
       ignore_run_exports:
@@ -110,7 +109,7 @@ outputs:
     version: {{ version }}
     script: build_finufft.sh
     build:
-      skip: True  # [cuda_compiler_version == "None"]
+      skip: True  # [win or cuda_compiler_version == "None"]
       noarch: python
     requirements:
       host:
