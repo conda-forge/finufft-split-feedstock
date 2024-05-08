@@ -12,6 +12,7 @@ source:
     - 0001-python-extension.patch
     - 0002-cufinufft-no-static.patch
     - 0003-cufinufft-python-extension.patch
+    - 0004-no-march-native.patch
 
 build:
   number: 1
@@ -57,6 +58,9 @@ outputs:
       skip: True  # [cuda_compiler_version != "None"]
       noarch: python
     requirements:
+      build:
+        - cross-python_{{ target_platform }}    # [build_platform != target_platform]
+        - python                                # [build_platform != target_platform]
       host:
         - python
         - pip
