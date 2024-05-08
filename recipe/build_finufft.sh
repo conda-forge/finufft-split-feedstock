@@ -15,6 +15,7 @@ if [[ $PKG_NAME == "libfinufft" ]]; then
     cmake --build build-lib --parallel ${CPU_COUNT}
     cmake --install build-lib
     rm -rf ${PREFIX}/lib/libfinufft_static.a
+    rm -rf ${PREFIX}/share/finufft
 
 elif [[ $PKG_NAME == "libcufinufft" ]]; then
 
