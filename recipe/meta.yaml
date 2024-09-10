@@ -1,5 +1,5 @@
 {% set name = "finufft" %}
-{% set version = "2.2.0" %}
+{% set version = "2.3.0" %}
 
 package:
   name: finufft-split
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://github.com/flatironinstitute/finufft/archive/v{{ version }}.tar.gz
-  sha256: 0dac7f8f2648fbf5c448cf23a331766e29a7c87b86365d28efb1793b4b023ac1
+  sha256: dbc0fd3cbf9057c855ca1252d54900e715fe04f1d4adde0ad462b6fe294142eb
   patches:
     - 0001-python-extension.patch
     - 0002-cufinufft-no-static.patch
@@ -15,15 +15,15 @@ source:
     - 0004-no-march-native.patch
 
 build:
-  number: 2
+  number: 0
 
 outputs:
   - name: libfinufft
     version: {{ version }}
-    script: build_finufft.sh   # [unix]
+    script: build_finufft.sh  # [unix]
     script: build_finufft.bat  # [win]
     build:
-      skip: True  # [cuda_compiler_version != "None"]
+      skip: true  # [cuda_compiler_version != "None"]
       run_exports:
         - {{ pin_subpackage('libfinufft', max_pin='x.x') }}
       ignore_run_exports:
@@ -52,10 +52,10 @@ outputs:
 
   - name: finufft
     version: {{ version }}
-    script: build_finufft.sh   # [unix]
+    script: build_finufft.sh  # [unix]
     script: build_finufft.bat  # [win]
     build:
-      skip: True  # [cuda_compiler_version != "None"]
+      skip: true  # [cuda_compiler_version != "None"]
       noarch: python
     requirements:
       build:
@@ -78,9 +78,9 @@ outputs:
 
   - name: libcufinufft
     version: {{ version }}
-    script: build_finufft.sh   # [unix]
+    script: build_finufft.sh  # [unix]
     build:
-      skip: True  # [win or cuda_compiler_version == "None"]
+      skip: true  # [win or cuda_compiler_version == "None"]
       run_exports:
         - {{ pin_subpackage('libcufinufft', max_pin='x.x') }}
       ignore_run_exports:
@@ -113,7 +113,7 @@ outputs:
     version: {{ version }}
     script: build_finufft.sh
     build:
-      skip: True  # [win or cuda_compiler_version == "None"]
+      skip: true  # [win or cuda_compiler_version == "None"]
       noarch: python
     requirements:
       host:
