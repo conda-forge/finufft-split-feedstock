@@ -10,7 +10,7 @@ source:
   sha256: 7fedf9da4780110a229f66ea6246f9aeca2dafd758f00b454c6a6850024a93df
 
 build:
-  number: 0
+  number: 1
 
 outputs:
   # - name: libfinufft
