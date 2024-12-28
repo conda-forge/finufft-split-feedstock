@@ -47,7 +47,7 @@ outputs:
 
   - name: finufft
     version: {{ version }}
-    script: build_finufft.sh  # [unix]
+    script: build_finufft.sh  # [not win]
     script: build_finufft.bat  # [win]
     build:
       skip: true  # [cuda_compiler_version != "None"]
@@ -62,10 +62,10 @@ outputs:
         - llvm-openmp                           # [osx and build_platform != target_platform]
         - libgomp                               # [linux and build_platform != target_platform]
         - {{ compiler('cxx') }}
-        - {{ stdlib("c") }}
+        - {{ stdlib('c') }}
         - cmake
         - ninja
-        - make  # [unix]
+        - make  # [not win]
       host:
         - python
         - pip
@@ -126,7 +126,7 @@ outputs:
     requirements:
       build:
         - {{ compiler('cxx') }}
-        - {{ stdlib("c") }}
+        - {{ stdlib('c') }}
         - {{ compiler('cuda') }}
         - cmake
         - ninja
