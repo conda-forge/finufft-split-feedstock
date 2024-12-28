@@ -17,7 +17,6 @@ if /I "%PKG_NAME%" == "libfinufft" (
 )
 if /I "%PKG_NAME%" == "finufft" (
 
-    set "FINUFFT_USE_OPENMP=OFF"
     %PYTHON% -m pip install --no-deps --no-build-isolation -vv ./python/finufft
 
 )

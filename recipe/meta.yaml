@@ -51,6 +51,8 @@ outputs:
     script: build_finufft.bat  # [win]
     build:
       skip: true  # [cuda_compiler_version != "None"]
+      script_env:
+        - FINUFFT_USE_OPENMP=OFF  # [win]
     requirements:
       build:
         - cross-python_{{ target_platform }}    # [build_platform != target_platform]
