@@ -47,8 +47,7 @@ outputs:
 
   - name: finufft
     version: {{ version }}
-    script: build_finufft.sh  # [unix]
-    script: build_finufft.bat  # [win]
+    script: {{ PYTHON }} -m pip install --no-deps --no-build-isolation -vv ./python/finufft
     build:
       skip: true  # [cuda_compiler_version != "None"]
       script_env:
@@ -122,7 +121,7 @@ outputs:
 
   - name: cufinufft
     version: {{ version }}
-    script: build_finufft.sh
+    script: {{ PYTHON }} -m pip install --no-deps --no-build-isolation -vv ./python/cufinufft
     build:
       skip: true  # [win or cuda_compiler_version == "None"]
       script_env:
@@ -143,6 +142,7 @@ outputs:
         - cuda-nvml-dev     # [(cuda_compiler_version or "").startswith("12")]
         - cuda-nvtx-dev     # [(cuda_compiler_version or "").startswith("12")]
         - libcufft-dev      # [(cuda_compiler_version or "").startswith("12")]
+        - libcufft-static   # [(cuda_compiler_version or "").startswith("12")]
         - cuda-version {{ cuda_compiler_version }}
         - fftw
         - libgomp
