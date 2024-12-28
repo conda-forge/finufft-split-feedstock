@@ -43,7 +43,6 @@ elif [[ $PKG_NAME == "finufft" ]]; then
 
 elif [[ $PKG_NAME == "cufinufft" ]]; then
 
-    export CUFINUFFT_DIR="${PREFIX}/lib/"
     "${PYTHON}" -m pip install --no-deps --no-build-isolation -vv ./python/cufinufft
 
 fi

@@ -47,7 +47,8 @@ outputs:
 
   - name: finufft
     version: {{ version }}
-    script: {{ PYTHON }} -m pip install --no-deps --no-build-isolation -vv ./python/finufft
+    script: build_finufft.sh  # [unix]
+    script: build_finufft.bat  # [win]
     build:
       skip: true  # [cuda_compiler_version != "None"]
       script_env:
@@ -121,7 +122,7 @@ outputs:
 
   - name: cufinufft
     version: {{ version }}
-    script: {{ PYTHON }} -m pip install --no-deps --no-build-isolation -vv ./python/cufinufft
+    script: build_finufft.sh
     build:
       skip: true  # [win or cuda_compiler_version == "None"]
       script_env:
