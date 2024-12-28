@@ -39,10 +39,12 @@ elif [[ $PKG_NAME == "libcufinufft" ]]; then
 
 elif [[ $PKG_NAME == "finufft" ]]; then
 
-    "${PYTHON}" -m pip install --no-deps --no-build-isolation -vv ./python/finufft
+    SKBUILD_CMAKE_DEFINE=FINUFFT_ARCH_FLAGS="-m${ARCH}" FINUFFT_USE_OPENMP=ON \
+        "${PYTHON}" -m pip install --no-deps --no-build-isolation -vv ./python/finufft
 
 elif [[ $PKG_NAME == "cufinufft" ]]; then
 
-    "${PYTHON}" -m pip install --no-deps --no-build-isolation -vv ./python/cufinufft
+    SKBUILD_CMAKE_DEFINE=FINUFFT_ARCH_FLAGS="-m${ARCH}" FINUFFT_USE_OPENMP=ON \
+        "${PYTHON}" -m pip install --no-deps --no-build-isolation -vv ./python/cufinufft
 
 fi
