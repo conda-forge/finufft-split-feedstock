@@ -53,7 +53,8 @@ outputs:
       skip: true  # [cuda_compiler_version != "None"]
       script_env:
         - FINUFFT_ARCH_FLAGS=
-        - FINUFFT_USE_OPENMP=ON
+        - FINUFFT_USE_OPENMP=ON  # [unix]
+        - FINUFFT_USE_OPENMP=OFF  # [win]
     requirements:
       build:
         - cross-python_{{ target_platform }}    # [build_platform != target_platform]
@@ -66,7 +67,7 @@ outputs:
         - {{ stdlib("c") }}
         - cmake
         - ninja
-        - make  # [linux]
+        - make  # [unix]
       host:
         - python
         - pip
@@ -134,7 +135,7 @@ outputs:
         - {{ compiler('cuda') }}
         - cmake
         - ninja
-        - make  # [linux]
+        - make
       host:
         - nccl
         - cuda-cupti-dev    # [(cuda_compiler_version or "").startswith("12")]
