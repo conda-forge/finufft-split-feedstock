@@ -7,43 +7,43 @@ package:
 
 source:
   url: https://github.com/flatironinstitute/finufft/archive/v{{ version }}.tar.gz
-  sha256: dd0d3b2a87b51b4aada6dfd63de1515c73aa88bf4370eb54e289145159561166
+  sha256: 7fedf9da4780110a229f66ea6246f9aeca2dafd758f00b454c6a6850024a93df
 
 build:
   number: 0
 
 outputs:
-  - name: libfinufft
-    version: {{ version }}
-    script: build_finufft.sh  # [unix]
-    script: build_finufft.bat  # [win]
-    build:
-      skip: true  # [cuda_compiler_version != "None"]
-      run_exports:
-        - {{ pin_subpackage('libfinufft', max_pin='x.x') }}
-      ignore_run_exports:
-        - python  # [win]
-    requirements:
-      build:
-        - {{ compiler('cxx') }}
-        - {{ stdlib("c") }}
-        - cmake
-        - ninja
-        - python  # [win]
-      host:
-        - fftw
-        - llvm-openmp  # [osx]
-        - libgomp  # [linux]
-    test:
-      commands:
-        - test -f ${PREFIX}/include/finufft.h  # [unix]
-        - if not exist %LIBRARY_PREFIX%\include\finufft.h (exit 1)  # [win]
+  # - name: libfinufft
+  #   version: {{ version }}
+  #   script: build_finufft.sh  # [unix]
+  #   script: build_finufft.bat  # [win]
+  #   build:
+  #     skip: true  # [cuda_compiler_version != "None"]
+  #     run_exports:
+  #       - {{ pin_subpackage('libfinufft', max_pin='x.x') }}
+  #     ignore_run_exports:
+  #       - python  # [win]
+  #   requirements:
+  #     build:
+  #       - {{ compiler('cxx') }}
+  #       - {{ stdlib("c") }}
+  #       - cmake
+  #       - ninja
+  #       - python  # [win]
+  #     host:
+  #       - fftw
+  #       - llvm-openmp  # [osx]
+  #       - libgomp  # [linux]
+  #   test:
+  #     commands:
+  #       - test -f ${PREFIX}/include/finufft.h  # [unix]
+  #       - if not exist %LIBRARY_PREFIX%\include\finufft.h (exit 1)  # [win]
 
-        - test -e ${PREFIX}/lib/libfinufft${SHLIB_EXT}  # [unix]
-        - test ! -f ${PREFIX}/lib/libfinufft_static.a   # [unix]
+  #       - test -e ${PREFIX}/lib/libfinufft${SHLIB_EXT}  # [unix]
+  #       - test ! -f ${PREFIX}/lib/libfinufft_static.a   # [unix]
 
-        - if not exist %LIBRARY_PREFIX%\bin\finufft.dll (exit 1)  # [win]
-        - if not exist %LIBRARY_PREFIX%\lib\finufft.lib (exit 1)  # [win]
+  #       - if not exist %LIBRARY_PREFIX%\bin\finufft.dll (exit 1)  # [win]
+  #       - if not exist %LIBRARY_PREFIX%\lib\finufft.lib (exit 1)  # [win]
 
   - name: finufft
     version: {{ version }}
@@ -51,9 +51,9 @@ outputs:
     script: build_finufft.bat  # [win]
     build:
       skip: true  # [cuda_compiler_version != "None"]
-      noarch: python
       script_env:
         - FINUFFT_ARCH_FLAGS=
+        - FINUFFT_USE_OPENMP=ON
     requirements:
       build:
         - cross-python_{{ target_platform }}    # [build_platform != target_platform]
@@ -84,17 +84,47 @@ outputs:
       commands:
         - python python/finufft/test/run_accuracy_tests.py
 
-  - name: libcufinufft
+  # - name: libcufinufft
+  #   version: {{ version }}
+  #   script: build_finufft.sh  # [unix]
+  #   build:
+  #     skip: true  # [win or cuda_compiler_version == "None"]
+  #     run_exports:
+  #       - {{ pin_subpackage('libcufinufft', max_pin='x.x') }}
+  #     ignore_run_exports:
+  #       - nccl
+  #       - fftw
+  #       - libgomp
+  #   requirements:
+  #     build:
+  #       - {{ compiler('cxx') }}
+  #       - {{ stdlib("c") }}
+  #       - {{ compiler('cuda') }}
+  #       - cmake
+  #       - ninja
+  #     host:
+  #       - nccl
+  #       - cuda-cupti-dev    # [(cuda_compiler_version or "").startswith("12")]
+  #       - cuda-cudart-dev   # [(cuda_compiler_version or "").startswith("12")]
+  #       - cuda-nvml-dev     # [(cuda_compiler_version or "").startswith("12")]
+  #       - cuda-nvtx-dev     # [(cuda_compiler_version or "").startswith("12")]
+  #       - libcufft-dev      # [(cuda_compiler_version or "").startswith("12")]
+  #       - cuda-version {{ cuda_compiler_version }}
+  #       - fftw
+  #       - libgomp
+  #   test:
+  #     commands:
+  #       - test -f ${PREFIX}/include/cufinufft.h
+  #       - test -e ${PREFIX}/lib/libcufinufft${SHLIB_EXT}
+
+  - name: cufinufft
     version: {{ version }}
-    script: build_finufft.sh  # [unix]
+    script: build_finufft.sh
     build:
       skip: true  # [win or cuda_compiler_version == "None"]
-      run_exports:
-        - {{ pin_subpackage('libcufinufft', max_pin='x.x') }}
-      ignore_run_exports:
-        - nccl
-        - fftw
-        - libgomp
+      script_env:
+        - FINUFFT_ARCH_FLAGS=
+        - FINUFFT_USE_OPENMP=ON
     requirements:
       build:
         - {{ compiler('cxx') }}
@@ -112,25 +142,12 @@ outputs:
         - cuda-version {{ cuda_compiler_version }}
         - fftw
         - libgomp
-    test:
-      commands:
-        - test -f ${PREFIX}/include/cufinufft.h
-        - test -e ${PREFIX}/lib/libcufinufft${SHLIB_EXT}
-
-  - name: cufinufft
-    version: {{ version }}
-    script: build_finufft.sh
-    build:
-      skip: true  # [win or cuda_compiler_version == "None"]
-      noarch: python
-    requirements:
-      host:
         - python
         - pip
+        - scikit-build-core
       run:
         - python
         - numpy
-        - {{ pin_subpackage('libcufinufft', exact=True) }}
     test:
       imports:
         - cufinufft
