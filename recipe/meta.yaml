@@ -8,11 +8,6 @@ package:
 source:
   url: https://github.com/flatironinstitute/finufft/archive/v{{ version }}.tar.gz
   sha256: dd0d3b2a87b51b4aada6dfd63de1515c73aa88bf4370eb54e289145159561166
-  patches:
-    - 0001-python-extension.patch
-    - 0002-cufinufft-no-static.patch
-    - 0003-cufinufft-python-extension.patch
-    - 0004-no-march-native.patch
 
 build:
   number: 0
@@ -57,17 +52,30 @@ outputs:
     build:
       skip: true  # [cuda_compiler_version != "None"]
       noarch: python
+      script_env:
+        - FINUFFT_ARCH_FLAGS=
     requirements:
       build:
         - cross-python_{{ target_platform }}    # [build_platform != target_platform]
         - python                                # [build_platform != target_platform]
+        - scikit-build-core                     # [build_platform != target_platform]
+        - fftw                                  # [build_platform != target_platform]
+        - llvm-openmp                           # [osx and build_platform != target_platform]
+        - libgomp                               # [linux and build_platform != target_platform]
+        - {{ compiler('cxx') }}
+        - {{ stdlib("c") }}
+        - cmake
+        - ninja
       host:
         - python
         - pip
+        - scikit-build-core
+        - fftw
+        - llvm-openmp  # [osx]
+        - libgomp  # [linux]
       run:
         - python
         - numpy
-        - {{ pin_subpackage('libfinufft', exact=True) }}
     test:
       imports:
         - finufft
