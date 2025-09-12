@@ -10,7 +10,7 @@ source:
   sha256: f847bf1f10659afb5b42cdb1c77df09c8e828d2c04bfe8b70d1c0225c998b5f4
 
 build:
-  number: 2
+  number: 3
 
 outputs:
   # - name: libfinufft
@@ -105,11 +105,11 @@ outputs:
   #       - ninja
   #     host:
   #       - nccl
-  #       - cuda-cupti-dev    # [(cuda_compiler_version or "").startswith("12")]
-  #       - cuda-cudart-dev   # [(cuda_compiler_version or "").startswith("12")]
-  #       - cuda-nvml-dev     # [(cuda_compiler_version or "").startswith("12")]
-  #       - cuda-nvtx-dev     # [(cuda_compiler_version or "").startswith("12")]
-  #       - libcufft-dev      # [(cuda_compiler_version or "").startswith("12")]
+  #       - cuda-cupti-dev    # [cuda_compiler_version != "None"]
+  #       - cuda-cudart-dev   # [cuda_compiler_version != "None"]
+  #       - cuda-nvml-dev     # [cuda_compiler_version != "None"]
+  #       - cuda-nvtx-dev     # [cuda_compiler_version != "None"]
+  #       - libcufft-dev      # [cuda_compiler_version != "None"]
   #       - cuda-version {{ cuda_compiler_version }}
   #       - fftw
   #       - libgomp
@@ -133,12 +133,12 @@ outputs:
         - make
       host:
         - nccl
-        - cuda-cupti-dev    # [(cuda_compiler_version or "").startswith("12")]
-        - cuda-cudart-dev   # [(cuda_compiler_version or "").startswith("12")]
-        - cuda-nvml-dev     # [(cuda_compiler_version or "").startswith("12")]
-        - cuda-nvtx-dev     # [(cuda_compiler_version or "").startswith("12")]
-        - libcufft-dev      # [(cuda_compiler_version or "").startswith("12")]
-        - libcufft-static   # [(cuda_compiler_version or "").startswith("12")]
+        - cuda-cupti-dev    # [cuda_compiler_version != "None"]
+        - cuda-cudart-dev   # [cuda_compiler_version != "None"]
+        - cuda-nvml-dev     # [cuda_compiler_version != "None"]
+        - cuda-nvtx-dev     # [cuda_compiler_version != "None"]
+        - libcufft-dev      # [cuda_compiler_version != "None"]
+        - libcufft-static   # [cuda_compiler_version != "None"]
         - cuda-version {{ cuda_compiler_version }}
         - fftw
         - libgomp
