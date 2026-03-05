@@ -1,5 +1,5 @@
 {% set name = "finufft" %}
-{% set version = "2.4.1" %}
+{% set version = "2.5.0" %}
 
 package:
   name: finufft-split
@@ -7,10 +7,10 @@ package:
 
 source:
   url: https://github.com/flatironinstitute/finufft/archive/v{{ version }}.tar.gz
-  sha256: f847bf1f10659afb5b42cdb1c77df09c8e828d2c04bfe8b70d1c0225c998b5f4
+  sha256: 9c53015ebfa04dcf6e720bc096564fe28b1ce1866f722ac85f4ee44901f7e0a8
 
 build:
-  number: 2
+  number: 0
 
 outputs:
   # - name: libfinufft
