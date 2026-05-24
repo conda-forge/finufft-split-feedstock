@@ -4,6 +4,8 @@ set -euxo pipefail
 
 if [[ "${target_platform}" == "osx-arm64" ]]; then
   export ARCH_FLAGS="-mcpu=apple-m3"
+elif [[ "${target_platform}" == "linux-aarch64" ]]; then
+  export ARCH_FLAGS="-march=armv8-a"
 else
   export ARCH_FLAGS="-m${ARCH}"
 fi
