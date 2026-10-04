@@ -1,6 +1,6 @@
 {% set name = "finufft" %}
 {% set version = "2.5.1" %}
-{% set build = 3 %}
+{% set build = 4 %}
 
 package:
   name: finufft-split
