@@ -12,6 +12,14 @@ source:
 build:
   number: 2
 
+# Narrow the build requirements at the top level to avoid OOM in CI during rendering
+requirements:
+  build:
+    - {{ compiler('cxx') }}
+    - {{ compiler('cuda') }}  # [cuda_compiler_version != "None"]
+  host:
+    - python
+
 outputs:
   # - name: libfinufft
   #   version: {{ version }}
